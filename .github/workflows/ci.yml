@@ -28,10 +28,9 @@ jobs:
 
       - name: Install Python requirements
         run: |
-          pip install -U pip==22.0.2
+          pip install -U pip==23.0.0
           pip install cython==0.29.28
-          pip install scipy matplotlib
-          pip install nose
+          pip install scipy matplotlib nose
 
       - name: Install Assimulo
         env:
