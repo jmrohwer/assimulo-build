@@ -4,6 +4,9 @@ import os
 import sysconfig
 import glob
 import subprocess
+import assimulo
+
+print(assimulo.__file__)
 
 EX_PATH = os.path.join(sysconfig.get_path('platlib'), 'assimulo', 'examples')
 os.chdir(EX_PATH)
