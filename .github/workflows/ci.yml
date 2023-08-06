@@ -17,6 +17,7 @@ jobs:
           echo $HOME
           env
           sudo whoami
+          python -c "import sys, sysconfig; print(sys.prefix); print(sysconfig.get_paths())"
 
 #      - name: Install pip and setuptools
 #        run: |
