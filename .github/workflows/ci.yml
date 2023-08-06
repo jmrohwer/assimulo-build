@@ -34,7 +34,7 @@ jobs:
           wget https://github.com/modelon-community/Assimulo/archive/refs/tags/Assimulo-${ASSIMULO_VERSION}.zip
           unzip Assimulo-${ASSIMULO_VERSION}.zip
           cd Assimulo-Assimulo-${ASSIMULO_VERSION}
-          python3 setup.py install --optimize=1 \
+          python3 setup.py install --user --optimize=1 \
             --extra-fortran-link-flags="-shared" \
             --sundials-home=/usr \
             --blas-home=/usr/lib/x86_64-linux-gnu \
