@@ -8,11 +8,10 @@ jobs:
     name: Test Assimulo Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - name: Check environment
         run: |
           pwd
-          ls -l
+          ls -la
           whoami
           id
           pwd
