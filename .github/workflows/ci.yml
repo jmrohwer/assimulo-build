@@ -8,9 +8,11 @@ jobs:
     name: Test Assimulo Build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Check environment
         run: |
           pwd
+          ls -l
           whoami
           id
           pwd
@@ -19,24 +21,24 @@ jobs:
           sudo whoami
           python -c "import sys, sysconfig; print(sys.prefix); print (sys.path); print (sysconfig.get_paths())"
 
-      - name: Install SUNDIALS, cython3 and Assimulo requirements
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y --no-install-recommends libsundials-dev cython3
-          sudo apt-get install -y --no-install-recommends python3-scipy python3-matplotlib
-
-      - name: Install Assimulo
-        env:
-          ASSIMULO_VERSION: 3.4.3
-        run: |
-          pip install --user --install-option="--optimize=1" \
-            --install-option="--extra-fortran-link-flags=-shared" \
-            --install-option="--sundials-home=/usr" \
-            --install-option="--blas-home=/usr/lib/x86_64-linux-gnu" \
-            --install-option="--lapack-home=/usr" \
-            --install-option="--extra-fortran-compile-flags=-fallow-argument-mismatch"  \
-            --install-option="--extra-c-flags=-DNPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION" \
-            git+https://github.com/modelon-community/Assimulo.git@Assimulo-${ASSIMULO_VERSION}
+#      - name: Install SUNDIALS, cython3 and Assimulo requirements
+#        run: |
+#          sudo apt-get update -y
+#          sudo apt-get install -y --no-install-recommends libsundials-dev cython3
+#          sudo apt-get install -y --no-install-recommends python3-scipy python3-matplotlib
+#
+#      - name: Install Assimulo
+#        env:
+#          ASSIMULO_VERSION: 3.4.3
+#        run: |
+#          pip install --user --install-option="--optimize=1" \
+#            --install-option="--extra-fortran-link-flags=-shared" \
+#            --install-option="--sundials-home=/usr" \
+#            --install-option="--blas-home=/usr/lib/x86_64-linux-gnu" \
+#            --install-option="--lapack-home=/usr" \
+#            --install-option="--extra-fortran-compile-flags=-fallow-argument-mismatch"  \
+#            --install-option="--extra-c-flags=-DNPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION" \
+#            git+https://github.com/modelon-community/Assimulo.git@Assimulo-${ASSIMULO_VERSION}
 #          cd /tmp
 #          which python3
 #          wget https://github.com/modelon-community/Assimulo/archive/refs/tags/Assimulo-${ASSIMULO_VERSION}.zip
