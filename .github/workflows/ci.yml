@@ -16,18 +16,28 @@ jobs:
           env
           python -c "import sys, sysconfig; print(sys.prefix); print (sys.path); print (sysconfig.get_paths())"
 
-      - name: Install SUNDIALS, cython3 and Assimulo requirements
+      - name: Install Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.10'
+
+      - name: Install SUNDIALS
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y --no-install-recommends libsundials-dev cython3
-          sudo apt-get install -y --no-install-recommends python3-scipy python3-matplotlib
-          sudo apt-get install -y --no-install-recommends python3-nose
+          sudo apt-get install -y --no-install-recommends libsundials-dev
+
+      - name: Install Python requirements
+        run: |
+          pip install -U pip==22.0.2
+          pip install cython==0.29.28
+          pip install scipy matplotlib
+          pip install nose
 
       - name: Install Assimulo
         env:
           ASSIMULO_VERSION: 3.4.3
         run: |
-          sudo pip install --install-option="--optimize=1" \
+          pip install --install-option="--optimize=1" \
             --install-option="--extra-fortran-link-flags=-shared" \
             --install-option="--sundials-home=/usr" \
             --install-option="--blas-home=/usr/lib/x86_64-linux-gnu" \
@@ -37,10 +47,10 @@ jobs:
             git+https://github.com/modelon-community/Assimulo.git@Assimulo-${ASSIMULO_VERSION}
 
       - name: Test Assimulo
-        run: python3 test_assimulo.py
+        run: python test_assimulo.py
 
       - name: Install and test PySCeS
         run: |
-          sudo pip install pysces
+          pip install pysces
           python -c "import pysces; pysces.test(3)"
           python test_pysces.py
