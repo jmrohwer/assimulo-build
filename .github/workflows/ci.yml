@@ -21,6 +21,7 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends libsundials-dev cython3
           sudo apt-get install -y --no-install-recommends python3-scipy python3-matplotlib
+          sudo apt-get install -y --no-install-recommends python3-nose
 
       - name: Install Assimulo
         env:
@@ -38,25 +39,8 @@ jobs:
       - name: Test Assimulo
         run: python3 test_assimulo.py
 
-#      - name: Install PySCeS
-#        uses: nick-invision/retry@v2
-#        with:
-#          timeout_minutes: 20
-#          retry_on: error
-#          retry_wait_seconds: 300
-#          max_attempts: 4
-#          command: |
-#            sudo apt-get update -y
-#            sudo apt-get install -y --no-install-recommends jq
-#
-#            SIMULATOR_VERSION=$(jq -r '.version' biosimulators.json)
-#
-#            sudo apt-get update -y
-#            sudo apt-get install -y --no-install-recommends \
-#              git \
-#              gcc \
-#              gfortran \
-#              libgfortran5
-#
-#            python -m pip install "pysces==${SIMULATOR_VERSION}"
-
+      - name: Install and test PySCeS
+        run: |
+          sudo pip install pysces
+          python -c "import pysces; pysces.test(3)"
+          python test_pysces.py
